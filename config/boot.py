@@ -33,9 +33,15 @@ import disnake as discord
 import glob
 from disnake.ext import commands
 import glob
+from database.db import engine, Base
+
 # Add the project root to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# Create the database tables
+Base.metadata.create_all(bind=engine)
+
+# Check if the Flask app and Discord bot are enabled
 flask_enabled = os.environ.get('FLASK_HOST') # Check if the FLASK_HOST environment variable is set
 discord_enabled = os.environ.get('DISCORD_TOKEN') # Check if the DISCORD_BOT_TOKEN environment variable is set
 
@@ -56,12 +62,14 @@ if discord_enabled:
     print("Discord bot enabled")
     intents = discord.Intents.all() # Define the bot's intents
     bot = commands.Bot(command_prefix=os.environ.get('DISCORD_PREFIX','!'), intents=intents,)
-
+    
+    # Define the bot's event listeners
     @bot.event
     async def on_ready():
         print(f'Logged in as {bot.user}') # Print the bot's username when it's ready
 
     def load_cogs(bot):
+        # Load all cogs in the 'app/Commands/Context' and 'app/Commands/Slash' directories
         cog_directories = ['app/Commands/Context', 'app/Commands/Slash'] 
         for directory in cog_directories:
             for filename in glob.glob(f'{directory}/*.py'):
@@ -74,6 +82,7 @@ if discord_enabled:
                         print(f'Failed to load cog {cog}: {e}') # Print the name of the cog that failed to load
 
     def run_discord_bot():
+        # Start the Discord bot
         try:
             print("Starting Discord bot...")
             load_cogs(bot)
