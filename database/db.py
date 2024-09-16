@@ -43,17 +43,19 @@ class BaseModel(Base):
     id = Column(Integer, primary_key=True, index=True)  # Every model will have an id column
 
     @classmethod
-    def create(cls, db_session, **kwargs):
+    def create(cls, db_session=None, **kwargs):
         """
         Create a new instance of the model and add it to the session.
 
         Args:
-            db_session (Session): The database session.
+            db_session (Session, optional): The database session. Defaults to None.
             **kwargs: The attributes of the model.
 
         Returns:
             BaseModel: The created instance of the model.
         """
+        if db_session is None:
+            db_session = SessionLocal()
         instance = cls(**kwargs)
         db_session.add(instance)
         db_session.commit()
@@ -61,45 +63,51 @@ class BaseModel(Base):
         return instance
 
     @classmethod
-    def get(cls, db_session, id):
+    def get(cls, id, db_session=None):
         """
         Get an instance of the model by ID.
 
         Args:
-            db_session (Session): The database session.
             id (int): The ID of the model instance.
+            db_session (Session, optional): The database session. Defaults to None.
 
         Returns:
             BaseModel: The instance of the model, or None if not found.
         """
+        if db_session is None:
+            db_session = SessionLocal()
         return db_session.query(cls).filter(cls.id == id).first()
 
     @classmethod
-    def all(cls, db_session):
+    def all(cls, db_session=None):
         """
         Get all instances of the model.
 
         Args:
-            db_session (Session): The database session.
+            db_session (Session, optional): The database session. Defaults to None.
 
         Returns:
             list: A list of all instances of the model.
         """
+        if db_session is None:
+            db_session = SessionLocal()
         return db_session.query(cls).all()
 
     @classmethod
-    def update(cls, db_session, id, **kwargs):
+    def update(cls, id, db_session=None, **kwargs):
         """
         Update an instance of the model by ID with the given keyword arguments.
 
         Args:
-            db_session (Session): The database session.
             id (int): The ID of the model instance.
+            db_session (Session, optional): The database session. Defaults to None.
             **kwargs: The attributes to update.
 
         Returns:
             BaseModel: The updated instance of the model, or None if not found.
         """
+        if db_session is None:
+            db_session = SessionLocal()
         instance = db_session.query(cls).filter(cls.id == id).first()
         if instance:
             for key, value in kwargs.items():
@@ -109,17 +117,19 @@ class BaseModel(Base):
         return instance
 
     @classmethod
-    def delete(cls, db_session, id):
+    def delete(cls, id, db_session=None):
         """
         Delete an instance of the model by ID.
 
         Args:
-            db_session (Session): The database session.
             id (int): The ID of the model instance.
+            db_session (Session, optional): The database session. Defaults to None.
 
         Returns:
             BaseModel: The deleted instance of the model, or None if not found.
         """
+        if db_session is None:
+            db_session = SessionLocal()
         instance = db_session.query(cls).filter(cls.id == id).first()
         if instance:
             db_session.delete(instance)
@@ -127,32 +137,36 @@ class BaseModel(Base):
         return instance
 
     @classmethod
-    def filter(cls, db_session, **kwargs):
+    def filter(cls, db_session=None, **kwargs):
         """
         Filter instances of the model by the given keyword arguments.
 
         Args:
-            db_session (Session): The database session.
+            db_session (Session, optional): The database session. Defaults to None.
             **kwargs: The attributes to filter by.
 
         Returns:
             list: A list of instances of the model that match the filter criteria.
         """
+        if db_session is None:
+            db_session = SessionLocal()
         query = db_session.query(cls)
         for key, value in kwargs.items():
             query = query.filter(getattr(cls, key) == value)
         return query.all()
     
     @classmethod
-    def exists(cls, db_session, id):
+    def exists(cls, id, db_session=None):
         """
         Check if an instance of the model exists by ID.
 
         Args:
-            db_session (Session): The database session.
             id (int): The ID of the model instance.
+            db_session (Session, optional): The database session. Defaults to None.
 
         Returns:
             bool: True if the instance exists, False otherwise.
         """
+        if db_session is None:
+            db_session = SessionLocal()
         return db_session.query(cls).filter(cls.id == id).exists()
