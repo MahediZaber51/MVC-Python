@@ -50,7 +50,7 @@ class Users(BaseModel):
         Get the user's balance, creating one if it doesn't exist.
 
         Returns:
-            Balance: The user's balance.
+            Balance: The user's balance model instance.
         """
         if not self.balances:
             new_balance = Balance(user_id=self.id, amount=0.0)
@@ -58,6 +58,20 @@ class Users(BaseModel):
             session.commit()
             return new_balance
         return self.balances[0]
+    
+    def balance(self):
+        """
+        Get the user's balance amount, creating one if it doesn't exist.
+
+        Returns:
+            float: The user's balance amount.
+        """
+        if not self.balances:
+            new_balance = Balance(user_id=self.id, amount=0.0)
+            session.add(new_balance)
+            session.commit()
+            return new_balance.amount
+        return self.balances[0].amount
 
     def deposit(self, amount):
         """
@@ -107,4 +121,32 @@ class Users(BaseModel):
             session.commit()
         else:
             raise ValueError("Insufficient balance")
-        
+     
+# Example usage of the Users model
+
+# Create two user instances
+# user1 = Users.create(name="Zaber", email="zaber@example.com", password="password123")
+# user2 = Users.create(name="Mahedi", email="mahedi@example.com", password="password456")
+
+# Deposit money into user1's account
+# user1.deposit(100.0)
+
+# Withdraw money from user1's account
+# try:
+#     user1.withdraw(50.0)
+# except ValueError as e:
+#     print(e)
+
+# Transfer money from user1 to user2
+# try:
+#     user1.transfer(user2, 25.0)
+# except ValueError as e:
+#     print(e)
+
+# Print the balances of both users
+# print(f"User1's balance: {user1.balance()}")
+# print(f"User2's balance: {user2.balance()}")
+
+# Get Balance model instance which have id, user_id, amount
+# Balance1 = user1.get_balance()
+# Balance2 = user2.get_balance()
