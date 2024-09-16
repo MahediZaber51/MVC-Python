@@ -62,10 +62,10 @@ Welcome to the **Flask MVC Structure with Discord Integration**! This project is
 ## What's Next?
 
 ### To-Do
-- **Vendor Integrations**: Open for contributions to implement third-party integrations or plugins within the `vendor/` directory.
-- **Authentication**: Integrate authentication (OAuth or token-based) for the web app and APIs.
-- **File Management**: Add advanced handling for user uploads within the `storage/` folder.
-- **Error Handling & Logging**: Enhance error handling across both Flask and Discord components, with proper logging.
+- [ ] **Vendor Integrations**: Open for contributions to implement third-party integrations or plugins within the `vendor/` directory.
+- [ ]**Authentication**: Integrate authentication (OAuth or token-based) for the web app and APIs.
+- [ ] **File Management**: Add advanced handling for user uploads within the `storage/` folder.
+- [ ] **Error Handling & Logging**: Enhance error handling across both Flask and Discord components, with proper logging.
 
 ## Collaboration
 
