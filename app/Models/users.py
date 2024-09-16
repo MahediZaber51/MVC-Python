@@ -47,7 +47,7 @@ class Users(BaseModel):
 
     def get_balance(self):
         """
-        Get the user's balance, creating one if it doesn't exist.
+        Get the user's balance model instance, creating one if it doesn't exist.
 
         Returns:
             Balance: The user's balance model instance.
