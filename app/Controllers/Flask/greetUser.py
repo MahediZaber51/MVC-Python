@@ -13,3 +13,8 @@ def greet_user(name):
     """
     # Do some processing here
     return f"<h1>Hello, {name}!</h1>"
+
+# Example usage of the greet_user function
+# name = "Zaber"
+# greeting_message = greet_user(name)
+# print(greeting_message)  # Output: <h1>Hello, Zaber!</h1>

@@ -107,3 +107,4 @@ class Users(BaseModel):
             session.commit()
         else:
             raise ValueError("Insufficient balance")
+        

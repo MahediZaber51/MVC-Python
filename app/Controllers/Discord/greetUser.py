@@ -13,3 +13,8 @@ def greet_user(name):
     """
     # Do some processing here
     return f"Hello, **{name}**!"
+
+# Example usage of the greet_user function
+# name = ctx.author.name    [for example: "Zaber"]
+# greeting_message = greet_user(name)
+# print(greeting_message)  # Output: Hello, **Zaber**!
