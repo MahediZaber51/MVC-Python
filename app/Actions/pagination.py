@@ -10,8 +10,8 @@ async def invalid_response(interaction):
     """
     await interaction.response.send_message("Hmm? Seem like you are not the sender of this command!", ephemeral=True)
 
-# Define a create class
-class create:
+# Define a Paginator class
+class Paginator:
     """
     A class to create a paginated embed view.
 
@@ -229,3 +229,8 @@ class create:
             await interaction.response.send_message(embed=self.embeds[self.current_page-1], view=self.view(interaction), ephemeral=ephemeral)
         else:
             await interaction.edit_original_message(embed=self.embeds[self.current_page-1], view=self.view(interaction))
+            
+# Example usage of Paginator class:
+# segments = ["Page 1 content", disnake.Embed(title="Page 2", description="Page 2 content")]
+# paginator = Paginator(segments, title="Example Pagination", color=0x00ff00, prefix="**", suffix="**")
+# await paginator.start(interaction)
